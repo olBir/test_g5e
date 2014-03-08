@@ -95,93 +95,93 @@ return 0;
 }
 
 void NumberAsBinary(
-	char *       _result, // строка с результатом
-	unsigned int _number  // произвольное число
-	)
+    char *       _result, // строка с результатом
+    unsigned int _number  // произвольное число
+  )
 {
-	static bool flag = true;//флаг, обозначающий начало преобразования нового числа 
-	static int i;//счетчик значащих символов
+static bool flag = true;//флаг, обозначающий начало преобразования нового числа 
+  static int i;//счетчик значащих символов
 
-	if (flag)//если новое число, обнуляем счетчик значащих символов
-	{
-		i=0;
-		flag = false;
-	}
+  if (flag)//если новое число, обнуляем счетчик значащих символов
+  {
+    i=0;
+    flag = false;
+  }
 
-	if(_number>1)
-	{
-		NumberAsBinary(_result,_number/2);
-	}
+  if(_number>1)
+  {
+    NumberAsBinary(_result,_number/2);
+  }
 
-	flag=true;
-	_result[i]=_number%2 + '0';
-	i++;
+  flag=true;
+  _result[i]=_number%2 + '0';
+  i++;
 }
 
 void GenerateRandomArray(
-	int *        _result,  // возвращаемый массив
-	unsigned int _maxValue // максимальное число в последовательности
-	)
+    int *        _result,  // возвращаемый массив
+    unsigned int _maxValue // максимальное число в последовательности
+  )
 {
-	std::vector<int> val (_maxValue); 
+  std::vector<int> val (_maxValue); 
 
-	for (unsigned i=0; i<_maxValue; i++)
-		val.at(i)=i+1;
+  for (unsigned i=0; i<_maxValue; i++)
+    val.at(i)=i+1;
 
-	while(val.size()>0)//выдергиваем из вектора числа по рандомному индексу пока они не закончатся
-	{
-		int i = rand() % val.size();
-		*(_result++)=val.at(i);
-		val.erase(val.begin()+i);
-	}
+  while(val.size()>0)//выдергиваем из вектора числа по рандомному индексу пока они не закончатся
+  {
+    int i = rand() % val.size();
+    *(_result++)=val.at(i);
+    val.erase(val.begin()+i);
+  }
 }
 
 //алгоритм сортировки - "Быстрая сортировк"
 void Sort(
-	int *        _values, // сортируемый массив
-	unsigned int _count   // количество элементов в массиве
-	)
+    int *        _values, // сортируемый массив
+    unsigned int _count   // количество элементов в массиве
+  )
 {
-	int i = 0, j = _count-1;
-	int p = _values[_count>>1];//опорный элемент посередине массива
+  int i = 0, j = _count-1;
+  int p = _values[_count>>1];//опорный элемент посередине массива
 
-	do {
-		while ( _values[i] < p ) 
-			i++;
-		while ( _values[j] > p )
-			j--;
+  do {
+  while ( _values[i] < p ) 
+    i++;
+  while ( _values[j] > p )
+    j--;
 
-		if (i <= j) 
-		{
-			if(i!=j)//если элементы разлицны меняем местами их значения
-			{ 
-				_values[i]-=_values[j]; 
-				_values[j]=_values[i]+2*_values[j];	
-				_values[i]=(_values[j]-_values[i])/2;	
-				_values[j]-=_values[i];
-			}
-			i++; j--;
-		}
-	} while ( i<=j );
+  if (i <= j) 
+    {
+      if(i!=j)//если элементы разлицны меняем местами их значения
+        { 
+          _values[i]-=_values[j]; 
+          _values[j]=_values[i]+2*_values[j];	
+          _values[i]=(_values[j]-_values[i])/2;	
+          _values[j]-=_values[i];
+        }
+        i++; j--;
+    }
+  } while ( i<=j );
 
-	// рекурсивные вызовы, если есть, что сортировать 
-	if ( j > 0 ) Sort(_values, j+1);
-	if ( _count > i ) Sort(_values+i, _count-i);
+  // рекурсивные вызовы, если есть, что сортировать 
+  if ( j > 0 ) Sort(_values, j+1);
+  if ( _count > i ) Sort(_values+i, _count-i);
 }
 
 
 int GetMissingValue(
-	const int *  _values, // неупорядоченный массив целых чисел от 1 до _count
-	unsigned int _count   // количество элементов в массиве
+    const int *  _values, // неупорядоченный массив целых чисел от 1 до _count
+    unsigned int _count   // количество элементов в массиве
 	)
 {
-	int sum=0;
-	for(unsigned int i=0;i<_count-1;i++)
-	{
-		sum+=_values[i];
-	}
+  int sum=0;
+  for(unsigned int i=0;i<_count-1;i++)
+  {
+    sum+=_values[i];
+  }
 
-	return (1+_count)*_count/2 -sum;//сумма арифметической прогресии минус все элементы массива кроме последнего
+  return (1+_count)*_count/2 -sum;//сумма арифметической прогресии минус все элементы массива кроме последнего
 }
 
 
